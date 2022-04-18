@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ trend }}</h1>
+<h1>tweet</h1>
 
 {% for tweet in tweets.data %}
 
@@ -9,10 +9,7 @@
     <div class="card-content">
         <h4>{{ tweet.id }}</h4>
         <h4>{{ tweet.text }}</h4>
-        <!-- <a href="feed/<str:trend>/<int:tweet_id>">Details</a> -->
-        <a href="{% url 'tweet' trend tweet.id %}">Details</a>
-    </div>
-</div>
 
 {% endfor %}
+
 {% endblock %}
