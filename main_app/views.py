@@ -19,10 +19,11 @@ def feed(request):
   auth.set_access_token(access_token, access_token_secret)
   api = tweepy.API(auth)
   woeid=1
-  trends = api.get_place_trends(id = woeid)
-  print(trends[0])
+  trendslist = api.get_place_trends(id = woeid)
+  trends = trendslist[0]['trends']
+  print(trends)
 
-  return render(request, 'feed.html', {'trends': trends[0]})
+  return render(request, 'feed.html', {'trends': trends })
 
 def signup(request):
   error_message = ''
