@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 import tweepy
 import os
 
-
 # Create your views here
 
 def home(request):
@@ -45,5 +44,15 @@ def trend(request, trend):
   client = tweepy.Client(bearer_token=bearerToken)
   query = trend
   tweets = client.search_recent_tweets(query=query)
-  print(tweets)
+  for tweet in tweets.data:
+    print(tweet.id)
+  print(tweets.data)
   return render(request, 'trend.html', { 'trend': trend, 'tweets':tweets })
+
+def tweet(request, trend, tweet_id):
+  bearerToken = os.environ["bearer_token"]
+  client = tweepy.Client(bearer_token=bearerToken)
+  ids = tweet_id
+  tweets = client.get_tweets(ids=ids)
+  print(tweets)
+  return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets })
