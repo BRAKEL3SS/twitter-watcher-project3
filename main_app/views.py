@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+import tweepy
+import os
 
 
 # Create your views here
@@ -9,7 +11,18 @@ def home(request):
     return render(request, 'home.html')
 
 def feed(request):
-    return render(request, 'feed.html')
+  consumer_key = os.environ["consumer_key"]
+  consumer_secret = os.environ["consumer_secret"]
+  access_token = os.environ["access_token"]
+  access_token_secret = os.environ["access_token_secret"]
+  auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+  auth.set_access_token(access_token, access_token_secret)
+  api = tweepy.API(auth)
+  woeid=1
+  trends = api.get_place_trends(id = woeid)
+  print(trends[0])
+
+  return render(request, 'feed.html', {'trends': trends[0]})
 
 def signup(request):
   error_message = ''
