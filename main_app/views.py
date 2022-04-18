@@ -21,7 +21,7 @@ def feed(request):
   woeid=1
   trendslist = api.get_place_trends(id = woeid)
   trends = trendslist[0]['trends']
-  print(trends)
+  # print(trends)
 
   return render(request, 'feed.html', {'trends': trends })
 
@@ -38,3 +38,12 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render (request, 'registration/signup.html', context)    
+
+
+def trend(request, trend):
+  bearerToken = os.environ["bearer_token"]
+  client = tweepy.Client(bearer_token=bearerToken)
+  query = trend
+  tweets = client.search_recent_tweets(query=query)
+  print(tweets)
+  return render(request, 'trend.html', { 'trend': trend, 'tweets':tweets })
