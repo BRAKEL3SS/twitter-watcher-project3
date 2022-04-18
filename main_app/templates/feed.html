@@ -2,10 +2,9 @@
 {% block content %}
 
 <h1 class="red-text">This is the feed</h1>
-<a href="">
-{%for trend in trends %}
+{% for trend in trends %}
+<a href="{% url 'trend' trend.name %}">
     <p>{{trend.name}}</p>
-
-{% endfor %}
 </a>
+{% endfor %}
 {% endblock %}
