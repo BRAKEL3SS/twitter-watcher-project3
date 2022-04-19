@@ -62,7 +62,11 @@ def tweet(request, trend, tweet_id):
     tweetData.save()
   comment_form = CommentForm()
   print(tweets)
-  return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets , 'comment_form': comment_form})
+  tId = Tweet.objects.filter(tweetId=tweet_id).values('id')
+  print(tId[0]['id'])
+  comment = Comment.objects.filter(tweet_id=tId[0]['id'])
+  # print(comment)
+  return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets , 'comment_form': comment_form, 'comments': comment })
 
 def add_comment(request, trend, tweet_id):
     form = CommentForm(request.POST)
