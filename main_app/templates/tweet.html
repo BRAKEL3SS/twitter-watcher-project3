@@ -24,8 +24,8 @@
 
 <div class="card">
   <div class="card-content">
-    {% for comment in tweets.data.comment_set.all %}
-    <h4>{{ comment.text }}</h4>
+    {% for comment in comments %}
+    <h4>{{ comment }}</h4>
     
     {% endfor %}
   </div>
