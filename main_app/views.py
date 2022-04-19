@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from .models import Tweet
 import tweepy
 import os
 from.models import Comment
@@ -54,6 +55,10 @@ def tweet(request, trend, tweet_id):
   client = tweepy.Client(bearer_token=bearerToken)
   ids = tweet_id
   tweets = client.get_tweets(ids=ids)
+  text = tweets.data[0]
+  if not Tweet.objects.filter(tweetId=tweet_id, text=text):
+    tweetData = Tweet(tweetId=tweet_id, text=text)
+    tweetData.save()
   comment_form = CommentForm()
   return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets, 'comment_form': comment_form })
 
@@ -62,7 +67,7 @@ def add_comment(request, trend, tweet_id):
     if form.is_valid():
       new_comment = form.save(commit=False)
       new_comment.user = request.user
-      print(new_comment)
+      new_comment.tweet = Tweet.objects.get(tweetId=tweet_id)
       new_comment.save()
     else: 
       print(form._errors)
