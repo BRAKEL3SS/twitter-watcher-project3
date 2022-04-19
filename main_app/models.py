@@ -8,10 +8,10 @@ from django.contrib.auth.models import User
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(max_length=250)
-    date = models.DateField('comment date')
-
+    date = models.DateField('comment date', default=date.today)
     def __str__(self):
         return self.text
     
     # def get_absolute_url(self):
     #     return reverse('detail', kwargs={'comment_id': self.id})
+

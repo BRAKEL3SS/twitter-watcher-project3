@@ -7,4 +7,5 @@ urlpatterns = [
     path('feed/', views.feed, name='feed'),
     path('feed/<str:trend>', views.trend, name='trend'),
     path('feed/<str:trend>/<int:tweet_id>', views.tweet, name='tweet'),
+    path('feed/<str:trend>/<int:tweet_id>/add_comment', views.add_comment, name='add_comment'),
 ]
