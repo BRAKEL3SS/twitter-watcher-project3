@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 class Tweet(models.Model):
     tweetId = models.CharField(max_length=100)
     text = models.TextField(max_length=300)
+    # trend = models.CharField(max_length=100)
     class Meta:
         unique_together = [('tweetId', 'text')]
     def __str__(self):
@@ -23,5 +24,5 @@ class Comment(models.Model):
         return self.text
     
     # def get_absolute_url(self):
-    #     return reverse('detail', kwargs={'comment_id': self.id})
+    #     return reverse('tweet', kwargs={'tweet_id': self.tweet.id, 'trend': self.tweet.trend})
 

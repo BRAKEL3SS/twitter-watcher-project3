@@ -82,7 +82,8 @@ def add_comment(request, trend, tweet_id):
 class CommentUpdate(UpdateView):
   model = Comment
   fields = ['text']
+  success_url = '/feed'
 
 class CommentDelete(DeleteView):
   model = Comment
-  success = '/feed'
+  success_url = '/feed'
