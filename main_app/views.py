@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import Tweet
@@ -60,7 +61,8 @@ def tweet(request, trend, tweet_id):
     tweetData = Tweet(tweetId=tweet_id, text=text)
     tweetData.save()
   comment_form = CommentForm()
-  return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets, 'comment_form': comment_form })
+  print(tweets)
+  return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets , 'comment_form': comment_form})
 
 def add_comment(request, trend, tweet_id):
     form = CommentForm(request.POST)
@@ -73,3 +75,10 @@ def add_comment(request, trend, tweet_id):
       print(form._errors)
     return redirect('tweet', trend=trend, tweet_id=tweet_id)
 
+class CommentUpdate(UpdateView):
+  model = Comment
+  fields = ['text']
+
+class CommentDelete(DeleteView):
+  model = Comment
+  success = '/feed'
