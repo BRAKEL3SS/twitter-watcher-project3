@@ -10,6 +10,31 @@
         <h4>{{ tweet.id }}</h4>
         <h4>{{ tweet.text }}</h4>
 
+        <div class="col s6">
+            <form action="{% url 'add_comment' trend tweet.id %}" method="POST">
+                {% csrf_token %}
+                {{comment_form.as_p}}
+                <input type="Submit" class="btn" value="Add Comment">
+            </form>
+        </div>
+
 {% endfor %}
+
+<script>
+
+    const dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+      format: 'yyyy-mm-dd',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      autoClose: true
+    });
+  
+    const textEl = document.getElementById('id_text');
+    M.FormText.init(textEl);
+  
+  </script>
+
+
 
 {% endblock %}

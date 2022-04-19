@@ -3,6 +3,9 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 import tweepy
 import os
+from.models import Comment
+from .forms import CommentForm
+
 
 # Create your views here
 
@@ -44,9 +47,6 @@ def trend(request, trend):
   client = tweepy.Client(bearer_token=bearerToken)
   query = trend
   tweets = client.search_recent_tweets(query=query)
-  for tweet in tweets.data:
-    print(tweet.id)
-  print(tweets.data)
   return render(request, 'trend.html', { 'trend': trend, 'tweets':tweets })
 
 def tweet(request, trend, tweet_id):
@@ -54,5 +54,17 @@ def tweet(request, trend, tweet_id):
   client = tweepy.Client(bearer_token=bearerToken)
   ids = tweet_id
   tweets = client.get_tweets(ids=ids)
-  print(tweets)
-  return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets })
+  comment_form = CommentForm()
+  return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets, 'comment_form': comment_form })
+
+def add_comment(request, trend, tweet_id):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+      new_comment = form.save(commit=False)
+      new_comment.user = request.user
+      print(new_comment)
+      new_comment.save()
+    else: 
+      print(form._errors)
+    return redirect('tweet', trend=trend, tweet_id=tweet_id)
+
