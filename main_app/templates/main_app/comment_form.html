@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Edit <span class="teal-text">{{ object.text }}</span></h1>
+    <h1 class="white-text">Edit <span class="blue-text">{{ object.text }}</span></h1>
  
   <!-- Leaving the action empty makes the form post to the same url used to display it -->
   <form class="white-text" action="" method="post">
@@ -13,6 +13,6 @@
       <!-- form is an instance of a ModelForm class -->
       {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit!" class="btn">
+    <input type="submit" value="Submit!" class="btn grey darken-2">
   </form>
 {% endblock %}
