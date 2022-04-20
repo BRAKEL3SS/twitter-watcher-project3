@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse
 from .models import Tweet
 import tweepy
 import os
@@ -82,8 +83,15 @@ def add_comment(request, trend, tweet_id):
 class CommentUpdate(UpdateView):
   model = Comment
   fields = ['text']
-  success_url = '/feed'
+  def get_success_url(self):
+      trend = self.kwargs['trend']
+      tweet_id = self.kwargs['tweet_id']
+      return reverse("tweet", kwargs={'trend': trend, 'tweet_id': tweet_id})
 
 class CommentDelete(DeleteView):
   model = Comment
-  success_url = '/feed'
+  def get_success_url(self):
+    trend = self.kwargs['trend']
+    tweet_id = self.kwargs['tweet_id']
+    return reverse("tweet", kwargs={'trend': trend, 'tweet_id': tweet_id})
+  
