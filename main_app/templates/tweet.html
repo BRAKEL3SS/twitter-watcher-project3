@@ -2,14 +2,11 @@
 {% block content %}
 
 <h1 class="white-text center-align">tweet</h1>
-
 {% for tweet in tweets.data %}
-
 <div class="card grey darken-2 center-align">
     <div class="card-content white-text center-align">
         <h4>{{ tweet.id }}</h4>
         <h4>{{ tweet.text }}</h4>
-
         <div class="col s6">
             <form action="{% url 'add_comment' trend tweet.id %}" method="POST">
                 {% csrf_token %}
@@ -20,9 +17,7 @@
     </div>
 </div>
 <div class="divider"></div>
-
 {% endfor %}
-
 <div class="card grey darken-2">
   <div class="card-content">
     {% for comment in comments %}
@@ -32,10 +27,8 @@
       <a class="blue-text" href="{% url 'delete_comment' trend tweet_id comment.id %}">Delete</a>
     </div>
     {% endfor %}
-    
   </div>
 </div>
-
 <script>
   
   const dateEl = document.getElementById('id_date');

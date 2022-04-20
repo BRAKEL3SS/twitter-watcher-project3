@@ -4,13 +4,10 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from .models import Tweet
-import tweepy
-import os
 from.models import Comment
 from .forms import CommentForm
-
-
-# Create your views here
+import tweepy
+import os
 
 def home(request):
     return render(request, 'home.html')
@@ -26,7 +23,6 @@ def feed(request):
   woeid=1
   trendslist = api.get_place_trends(id = woeid)
   trends = trendslist[0]['trends']
-  # print(trends)
 
   return render(request, 'feed.html', {'trends': trends })
 
@@ -43,7 +39,6 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render (request, 'registration/signup.html', context)    
-
 
 def trend(request, trend):
   bearerToken = os.environ["bearer_token"]
@@ -62,11 +57,8 @@ def tweet(request, trend, tweet_id):
     tweetData = Tweet(tweetId=tweet_id, text=text)
     tweetData.save()
   comment_form = CommentForm()
-  print(tweets)
   tId = Tweet.objects.filter(tweetId=tweet_id).values('id')
-  print(tId[0]['id'])
   comment = Comment.objects.filter(tweet_id=tId[0]['id'])
-  # print(comment)
   return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets , 'comment_form': comment_form, 'comments': comment })
 
 def add_comment(request, trend, tweet_id):
@@ -76,8 +68,6 @@ def add_comment(request, trend, tweet_id):
       new_comment.user = request.user
       new_comment.tweet = Tweet.objects.get(tweetId=tweet_id)
       new_comment.save()
-    else: 
-      print(form._errors)
     return redirect('tweet', trend=trend, tweet_id=tweet_id)
 
 class CommentUpdate(UpdateView):

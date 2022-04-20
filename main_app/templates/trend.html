@@ -2,9 +2,7 @@
 {% block content %}
 
 <h1 class="white-text center-align">{{ trend }}</h1>
-
 {% for tweet in tweets.data %}
-
 <div class="card grey darken-2 center-align">
     <div class="card-content white-text">
         <h4>{{ tweet.text }}</h4>
