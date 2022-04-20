@@ -16,7 +16,7 @@ class Tweet(models.Model):
         
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField(max_length=250)
+    text = models.TextField('Comment', max_length=250)
     date = models.DateField('comment date', default=date.today)
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
 
