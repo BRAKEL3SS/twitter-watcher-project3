@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from .models import Tweet
 from.models import Comment
@@ -52,6 +54,7 @@ def tweet(request, trend, tweet_id):
   client = tweepy.Client(bearer_token=bearerToken)
   ids = tweet_id
   tweets = client.get_tweets(ids=ids)
+  print(tweets.data)
   text = tweets.data[0]
   if not Tweet.objects.filter(tweetId=tweet_id, text=text):
     tweetData = Tweet(tweetId=tweet_id, text=text)
@@ -61,6 +64,7 @@ def tweet(request, trend, tweet_id):
   comment = Comment.objects.filter(tweet_id=tId[0]['id'])
   return render(request, 'tweet.html', { 'tweet_id': tweet_id, 'trend': trend, 'tweets': tweets , 'comment_form': comment_form, 'comments': comment })
 
+@login_required
 def add_comment(request, trend, tweet_id):
     form = CommentForm(request.POST)
     if form.is_valid():
@@ -70,7 +74,7 @@ def add_comment(request, trend, tweet_id):
       new_comment.save()
     return redirect('tweet', trend=trend, tweet_id=tweet_id)
 
-class CommentUpdate(UpdateView):
+class CommentUpdate(LoginRequiredMixin, UpdateView):
   model = Comment
   fields = ['text']
   def get_success_url(self):
@@ -78,7 +82,7 @@ class CommentUpdate(UpdateView):
       tweet_id = self.kwargs['tweet_id']
       return reverse("tweet", kwargs={'trend': trend, 'tweet_id': tweet_id})
 
-class CommentDelete(DeleteView):
+class CommentDelete(LoginRequiredMixin, DeleteView):
   model = Comment
   def get_success_url(self):
     trend = self.kwargs['trend']
