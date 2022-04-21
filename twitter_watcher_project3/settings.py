@@ -125,6 +125,8 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/feed/'
 LOGOUT_REDIRECT_URL = '/'
 
+import django_on_heroku
+django_on_heroku.settings(locals())
 
 
 # Default primary key field type

@@ -1,0 +1,1 @@
+web: gunicorn twitter_watcher_project3.wsgi
