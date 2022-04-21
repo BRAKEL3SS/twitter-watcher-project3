@@ -22,7 +22,7 @@ def feed(request):
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
   auth.set_access_token(access_token, access_token_secret)
   api = tweepy.API(auth)
-  woeid=1
+  woeid=23424977
   trendslist = api.get_place_trends(id = woeid)
   trends = trendslist[0]['trends']
 

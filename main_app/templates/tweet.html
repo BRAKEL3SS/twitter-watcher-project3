@@ -27,7 +27,7 @@
       <tbody>
         {% for comment in comments %}
           <tr>
-            <td>{{ comment.user }} | </td>
+            <td>{{ comment.user }} </td>
             <td style=" max-width : 300px; word-wrap: break-word">{{ comment.text }}</td>
             <td>{{ comment.date }}</td>
             {% if comment.user == user %}
