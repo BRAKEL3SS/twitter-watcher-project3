@@ -6,10 +6,10 @@
 <div class="card grey darken-2 center-align">
     <div class="card-content white-text">
         <h4>{{ tweet.text }}</h4>
-        <!-- <a href="feed/<str:trend>/<int:tweet_id>">Details</a> -->
         <a href="{% url 'tweet' trend tweet.id %}">Details</a>
     </div>
 </div>
+<div class="divider"></div>
 
 {% endfor %}
 {% endblock %}
