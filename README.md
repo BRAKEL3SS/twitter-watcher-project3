@@ -7,6 +7,8 @@
 
 MADE WITH: Python/Django/Heroku/GitHub/Materialize/Tweepy/API/Postgresql
 
+TRELLO: https://trello.com/b/iZfDCgVg/project-3
+
 OPEN APP: https://twitter-watcher-project3.herokuapp.com/
 
 TWITTER WATCHER - The app that lets you weed through current top trending tweets on Twitter without having to make a Twitter account. You do have to make a Twatcher account in order to be able to comment on a tweet but your sign-up info has nothing to do with Twitter. Enjoy!
