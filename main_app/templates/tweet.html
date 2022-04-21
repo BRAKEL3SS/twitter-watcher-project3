@@ -30,11 +30,13 @@
             <td>{{ comment.user }} | </td>
             <td style=" max-width : 300px; word-wrap: break-word">{{ comment.text }}</td>
             <td>{{ comment.date }}</td>
+            {% if comment.user == user %}
             <td><div class="card-action">
               <a class="blue-text" href="{% url 'update_comment' trend tweet_id comment.id %}">Edit</a>
               <a class="blue-text" href="{% url 'delete_comment' trend tweet_id comment.id %}">Delete</a>
              </div>
             </td>
+            {% endif %}
           </tr>
           {% endfor %}
       </tbody>
